@@ -7,7 +7,7 @@
 
 
 __global__ void dvc_ScaLBL_D3Q19_AAeven_Greyscale(double *dist, int start, int finish, int Np, double rlx,  double rlx_eff, double Gx, double Gy, double Gz,
-                                                  double *Poros,double *Perm, double *Velocity, double *Pressure){
+                                                  double *Poros,double *Perm, double *Velocity, double *Pressure, bool Forchheimer){
 	int n;
 	// conserved momemnts
 	double rho,vx,vy,vz,v_mag;
@@ -55,7 +55,10 @@ __global__ void dvc_ScaLBL_D3Q19_AAeven_Greyscale(double *dist, int start, int f
 
         c0 = 0.5*(1.0+porosity*0.5*mu_eff/perm);
         if (porosity==1.0) c0 = 0.5;//i.e. apparent pore nodes
-        GeoFun = 1.75/sqrt(150.0*porosity*porosity*porosity);
+        if (Forchheimer == false)
+            GeoFun = 0.0;
+        else
+            GeoFun = 1.75 / sqrt(150.0 * porosity * porosity * porosity);
         c1 = porosity*0.5*GeoFun/sqrt(perm);
         if (porosity==1.0) c1 = 0.0;//i.e. apparent pore nodes
 
@@ -260,7 +263,7 @@ __global__ void dvc_ScaLBL_D3Q19_AAeven_Greyscale(double *dist, int start, int f
 }
 
 __global__ void dvc_ScaLBL_D3Q19_AAodd_Greyscale(int *neighborList, double *dist, int start, int finish, int Np, double rlx,  double rlx_eff, double Gx, double Gy, double Gz,
-                                                 double *Poros,double *Perm, double *Velocity, double *Pressure){
+                                                 double *Poros,double *Perm, double *Velocity, double *Pressure, bool Forchheimer){
 	int n;
 	// conserved momemnts
 	double rho,vx,vy,vz,v_mag;
@@ -362,7 +365,10 @@ __global__ void dvc_ScaLBL_D3Q19_AAodd_Greyscale(int *neighborList, double *dist
 
         c0 = 0.5*(1.0+porosity*0.5*mu_eff/perm);
         if (porosity==1.0) c0 = 0.5;//i.e. apparent pore nodes
-        GeoFun = 1.75/sqrt(150.0*porosity*porosity*porosity);
+        if (Forchheimer == false)
+            GeoFun = 0.0;
+        else
+            GeoFun = 1.75 / sqrt(150.0 * porosity * porosity * porosity);
         c1 = porosity*0.5*GeoFun/sqrt(perm);
         if (porosity==1.0) c1 = 0.0;//i.e. apparent pore nodes
 
@@ -567,7 +573,7 @@ __global__ void dvc_ScaLBL_D3Q19_AAodd_Greyscale(int *neighborList, double *dist
 }
 
 __global__ void dvc_ScaLBL_D3Q19_AAeven_Greyscale_IMRT(double *dist, int start, int finish, int Np, double rlx,  double rlx_eff, double Gx, double Gy, double Gz,
-                                                  double *Poros,double *Perm, double *Velocity, double Den, double *Pressure){
+                                                  double *Poros,double *Perm, double *Velocity, double Den, double *Pressure, bool Forchheimer){
 
 	int n;
 	double vx,vy,vz,v_mag;
@@ -888,7 +894,10 @@ __global__ void dvc_ScaLBL_D3Q19_AAeven_Greyscale_IMRT(double *dist, int start, 
 
             c0 = 0.5*(1.0+porosity*0.5*mu_eff/perm);
             if (porosity==1.0) c0 = 0.5;//i.e. apparent pore nodes
-            GeoFun = 1.75/sqrt(150.0*porosity*porosity*porosity);
+            if (Forchheimer == false)
+            GeoFun = 0.0;
+        else
+            GeoFun = 1.75 / sqrt(150.0 * porosity * porosity * porosity);
             c1 = porosity*0.5*GeoFun/sqrt(perm);
             if (porosity==1.0) c1 = 0.0;//i.e. apparent pore nodes
 
@@ -1063,7 +1072,7 @@ __global__ void dvc_ScaLBL_D3Q19_AAeven_Greyscale_IMRT(double *dist, int start, 
 
 
 __global__ void dvc_ScaLBL_D3Q19_AAodd_Greyscale_IMRT(int *neighborList, double *dist, int start, int finish, int Np, double rlx,  double rlx_eff, double Gx, double Gy, double Gz,
-                                                 double *Poros,double *Perm, double *Velocity,double Den, double *Pressure){
+                                                 double *Poros,double *Perm, double *Velocity,double Den, double *Pressure, bool Forchheimer){
 
 	int n, nread;
 	double vx,vy,vz,v_mag;
@@ -1401,7 +1410,10 @@ __global__ void dvc_ScaLBL_D3Q19_AAodd_Greyscale_IMRT(int *neighborList, double 
 
             c0 = 0.5*(1.0+porosity*0.5*mu_eff/perm);
             if (porosity==1.0) c0 = 0.5;//i.e. apparent pore nodes
-            GeoFun = 1.75/sqrt(150.0*porosity*porosity*porosity);
+            if (Forchheimer == false)
+            GeoFun = 0.0;
+        else
+            GeoFun = 1.75 / sqrt(150.0 * porosity * porosity * porosity);
             c1 = porosity*0.5*GeoFun/sqrt(perm);
             if (porosity==1.0) c1 = 0.0;//i.e. apparent pore nodes
 
@@ -1594,7 +1606,7 @@ __global__ void dvc_ScaLBL_D3Q19_AAodd_Greyscale_IMRT(int *neighborList, double 
 }
 
 __global__ void dvc_ScaLBL_D3Q19_AAodd_Greyscale_MRT(int *neighborList, double *dist, int start, int finish, int Np, double rlx,  double rlx_eff, double Gx, double Gy, double Gz,
-                                                 double *Poros,double *Perm, double *Velocity,double rho0, double *Pressure){
+                                                 double *Poros,double *Perm, double *Velocity,double rho0, double *Pressure, bool Forchheimer){
 
 	int n, nread;
 	int nr1,nr2,nr3,nr4,nr5,nr6;
@@ -1969,7 +1981,10 @@ __global__ void dvc_ScaLBL_D3Q19_AAodd_Greyscale_MRT(int *neighborList, double *
 
             c0 = 0.5*(1.0+porosity*0.5*mu_eff/perm);
             if (porosity==1.0) c0 = 0.5;//i.e. apparent pore nodes
-            GeoFun = 1.75/sqrt(150.0*porosity*porosity*porosity);
+            if (Forchheimer == false)
+            GeoFun = 0.0;
+        else
+            GeoFun = 1.75 / sqrt(150.0 * porosity * porosity * porosity);
             c1 = porosity*0.5*GeoFun/sqrt(perm);
             if (porosity==1.0) c1 = 0.0;//i.e. apparent pore nodes
 
@@ -2154,7 +2169,7 @@ __global__ void dvc_ScaLBL_D3Q19_AAodd_Greyscale_MRT(int *neighborList, double *
 }
 
 __global__ void dvc_ScaLBL_D3Q19_AAeven_Greyscale_MRT(double *dist, int start, int finish, int Np, double rlx,  double rlx_eff, double Gx, double Gy, double Gz,
-                                                  double *Poros,double *Perm, double *Velocity,double rho0, double *Pressure){
+                                                  double *Poros,double *Perm, double *Velocity,double rho0, double *Pressure, bool Forchheimer){
 
 	int n;
 	double vx,vy,vz,v_mag;
@@ -2476,7 +2491,10 @@ __global__ void dvc_ScaLBL_D3Q19_AAeven_Greyscale_MRT(double *dist, int start, i
 
             c0 = 0.5*(1.0+porosity*0.5*mu_eff/perm);
             if (porosity==1.0) c0 = 0.5;//i.e. apparent pore nodes
-            GeoFun = 1.75/sqrt(150.0*porosity*porosity*porosity);
+            if (Forchheimer == false)
+            GeoFun = 0.0;
+        else
+            GeoFun = 1.75 / sqrt(150.0 * porosity * porosity * porosity);
             c1 = porosity*0.5*GeoFun/sqrt(perm);
             if (porosity==1.0) c1 = 0.0;//i.e. apparent pore nodes
 
@@ -2677,7 +2695,7 @@ __global__ void dvc_ScaLBL_D3Q19_GreyIMRT_Init(double *dist, int Np, double Den)
 }
 
 
-extern "C" void ScaLBL_D3Q19_AAeven_Greyscale(double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double *Pressure){
+extern "C" void ScaLBL_D3Q19_AAeven_Greyscale(double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double *Pressure, bool Forchheimer){
 	
     dvc_ScaLBL_D3Q19_AAeven_Greyscale<<<NBLOCKS,NTHREADS >>>(dist,start,finish,Np,rlx,rlx_eff,Fx,Fy,Fz,Poros,Perm,Velocity,Pressure);
 
@@ -2687,7 +2705,7 @@ extern "C" void ScaLBL_D3Q19_AAeven_Greyscale(double *dist, int start, int finis
 	}
 }
 
-extern "C" void ScaLBL_D3Q19_AAodd_Greyscale(int *neighborList, double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double *Pressure){
+extern "C" void ScaLBL_D3Q19_AAodd_Greyscale(int *neighborList, double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double *Pressure, bool Forchheimer){
 
     dvc_ScaLBL_D3Q19_AAodd_Greyscale<<<NBLOCKS,NTHREADS >>>(neighborList,dist,start,finish,Np,rlx,rlx_eff,Fx,Fy,Fz,Poros,Perm,Velocity,Pressure);
 
@@ -2697,7 +2715,7 @@ extern "C" void ScaLBL_D3Q19_AAodd_Greyscale(int *neighborList, double *dist, in
 	}
 }
 
-extern "C" void ScaLBL_D3Q19_AAeven_Greyscale_IMRT(double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double Den,double *Pressure){
+extern "C" void ScaLBL_D3Q19_AAeven_Greyscale_IMRT(double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double Den,double *Pressure, bool Forchheimer){
 	
     dvc_ScaLBL_D3Q19_AAeven_Greyscale_IMRT<<<NBLOCKS,NTHREADS >>>(dist,start,finish,Np,rlx,rlx_eff,Fx,Fy,Fz,Poros,Perm,Velocity,Den,Pressure);
 
@@ -2707,7 +2725,7 @@ extern "C" void ScaLBL_D3Q19_AAeven_Greyscale_IMRT(double *dist, int start, int 
 	}
 }
 
-extern "C" void ScaLBL_D3Q19_AAodd_Greyscale_IMRT(int *neighborList, double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double Den,double *Pressure){
+extern "C" void ScaLBL_D3Q19_AAodd_Greyscale_IMRT(int *neighborList, double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double Den,double *Pressure, bool Forchheimer){
 
     dvc_ScaLBL_D3Q19_AAodd_Greyscale_IMRT<<<NBLOCKS,NTHREADS >>>(neighborList,dist,start,finish,Np,rlx,rlx_eff,Fx,Fy,Fz,Poros,Perm,Velocity,Den,Pressure);
 
@@ -2717,7 +2735,7 @@ extern "C" void ScaLBL_D3Q19_AAodd_Greyscale_IMRT(int *neighborList, double *dis
 	}
 }
 
-extern "C" void ScaLBL_D3Q19_AAodd_Greyscale_MRT(int *neighborList, double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double rho0,double *Pressure){
+extern "C" void ScaLBL_D3Q19_AAodd_Greyscale_MRT(int *neighborList, double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double rho0,double *Pressure, bool Forchheimer){
 
     dvc_ScaLBL_D3Q19_AAodd_Greyscale_MRT<<<NBLOCKS,NTHREADS >>>(neighborList,dist,start,finish,Np,rlx,rlx_eff,Fx,Fy,Fz,Poros,Perm,Velocity,rho0,Pressure);
 
@@ -2727,7 +2745,7 @@ extern "C" void ScaLBL_D3Q19_AAodd_Greyscale_MRT(int *neighborList, double *dist
 	}
 }
 
-extern "C" void ScaLBL_D3Q19_AAeven_Greyscale_MRT(double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double rho0,double *Pressure){
+extern "C" void ScaLBL_D3Q19_AAeven_Greyscale_MRT(double *dist, int start, int finish, int Np, double rlx, double rlx_eff, double Fx, double Fy, double Fz,double *Poros,double *Perm, double *Velocity,double rho0,double *Pressure, bool Forchheimer){
 	
     dvc_ScaLBL_D3Q19_AAeven_Greyscale_MRT<<<NBLOCKS,NTHREADS >>>(dist,start,finish,Np,rlx,rlx_eff,Fx,Fy,Fz,Poros,Perm,Velocity,rho0,Pressure);
 

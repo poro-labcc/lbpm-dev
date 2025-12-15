@@ -3135,7 +3135,7 @@ extern "C" void ScaLBL_D3Q19_AAeven_Greyscale(
 
     dvc_ScaLBL_D3Q19_AAeven_Greyscale<<<NBLOCKS, NTHREADS>>>(
         dist, start, finish, Np, rlx, rlx_eff, Fx, Fy, Fz, Poros, Perm,
-        Velocity, Pressure);
+        Velocity, Pressure, Forchheimer);
 
     cudaError_t err = cudaGetLastError();
     if (cudaSuccess != err) {
@@ -3151,7 +3151,7 @@ extern "C" void ScaLBL_D3Q19_AAodd_Greyscale(
 
     dvc_ScaLBL_D3Q19_AAodd_Greyscale<<<NBLOCKS, NTHREADS>>>(
         neighborList, dist, start, finish, Np, rlx, rlx_eff, Fx, Fy, Fz, Poros,
-        Perm, Velocity, Pressure);
+        Perm, Velocity, Pressure, Forchheimer);
 
     cudaError_t err = cudaGetLastError();
     if (cudaSuccess != err) {
@@ -3167,7 +3167,7 @@ extern "C" void ScaLBL_D3Q19_AAeven_Greyscale_IMRT(
 
     dvc_ScaLBL_D3Q19_AAeven_Greyscale_IMRT<<<NBLOCKS, NTHREADS>>>(
         dist, start, finish, Np, rlx, rlx_eff, Fx, Fy, Fz, Poros, Perm,
-        Velocity, Den, Pressure);
+        Velocity, Den, Pressure, Forchheimer);
 
     cudaError_t err = cudaGetLastError();
     if (cudaSuccess != err) {
@@ -3184,7 +3184,7 @@ extern "C" void ScaLBL_D3Q19_AAodd_Greyscale_IMRT(
 
     dvc_ScaLBL_D3Q19_AAodd_Greyscale_IMRT<<<NBLOCKS, NTHREADS>>>(
         neighborList, dist, start, finish, Np, rlx, rlx_eff, Fx, Fy, Fz, Poros,
-        Perm, Velocity, Den, Pressure);
+        Perm, Velocity, Den, Pressure, Forchheimer);
 
     cudaError_t err = cudaGetLastError();
     if (cudaSuccess != err) {
@@ -3202,7 +3202,7 @@ ScaLBL_D3Q19_AAodd_Greyscale_MRT(int *neighborList, double *dist, int start,
 
     dvc_ScaLBL_D3Q19_AAodd_Greyscale_MRT<<<NBLOCKS, NTHREADS>>>(
         neighborList, dist, start, finish, Np, rlx, rlx_eff, Fx, Fy, Fz, Poros,
-        Perm, Velocity, rho0, Pressure);
+        Perm, Velocity, rho0, Pressure, Forchheimer);
 
     cudaError_t err = cudaGetLastError();
     if (cudaSuccess != err) {
@@ -3218,7 +3218,7 @@ extern "C" void ScaLBL_D3Q19_AAeven_Greyscale_MRT(
 
     dvc_ScaLBL_D3Q19_AAeven_Greyscale_MRT<<<NBLOCKS, NTHREADS>>>(
         dist, start, finish, Np, rlx, rlx_eff, Fx, Fy, Fz, Poros, Perm,
-        Velocity, rho0, Pressure);
+        Velocity, rho0, Pressure, Forchheimer);
 
     cudaError_t err = cudaGetLastError();
     if (cudaSuccess != err) {

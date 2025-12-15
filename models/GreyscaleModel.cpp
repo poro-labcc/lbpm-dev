@@ -56,10 +56,10 @@ void ScaLBL_GreyscaleModel::ReadParams(string filename) {
     flux = 0.0;
     dp = 10.0;         //unit of 'dp': voxel
     CollisionType = 1; //1: IMRT; 2: BGK; 3: MRT
-    Forchheimer = true
+    Forchheimer = true;
 
-        // ---------------------- Greyscale Model parameters -----------------------//
-        if (greyscale_db->keyExists("timestepMax")) {
+    // ---------------------- Greyscale Model parameters -----------------------//
+    if (greyscale_db->keyExists("timestepMax")) {
         timestepMax = greyscale_db->getScalar<int>("timestepMax");
     }
     if (greyscale_db->keyExists("tau")) {

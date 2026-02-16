@@ -1435,11 +1435,6 @@ __global__  void dvc_ScaLBL_D3Q19_AAeven_Color(int *Map, double *dist, double *A
 				npx = (nx - nsx*(nx*nsx + ny*nsy + nz*nsz))*sqrt(1.0f-aff*aff)/Mag + nsx*aff;
 				npy = (ny - nsy*(nx*nsx + ny*nsy + nz*nsz))*sqrt(1.0f-aff*aff)/Mag + nsy*aff;
 				npz = (nz - nsz*(nx*nsx + ny*nsy + nz*nsz))*sqrt(1.0f-aff*aff)/Mag + nsz*aff;
-
-				// double gate = 0.5f * (tanh(20000.0f * (phi + 0.99f)) - tanh(20000.0f * (phi - 0.99f)));
-				// npx = gate * npx;
-				// npy = gate * npy;
-				// npz = gate * npz;
 			}else{
 				npx = nx;
 				npy = ny;
@@ -2082,11 +2077,6 @@ __global__ void dvc_ScaLBL_D3Q19_AAodd_Color(int *neighborList, int *Map, double
 				npx = (nx - nsx*(nx*nsx + ny*nsy + nz*nsz))*sqrt(1.0f-aff*aff)/Mag + nsx*aff;
 				npy = (ny - nsy*(nx*nsx + ny*nsy + nz*nsz))*sqrt(1.0f-aff*aff)/Mag + nsy*aff;
 				npz = (nz - nsz*(nx*nsx + ny*nsy + nz*nsz))*sqrt(1.0f-aff*aff)/Mag + nsz*aff;
-
-				// double gate = 0.5f * (tanh(20000.0f * (phi + 0.99f)) - tanh(20000.0f * (phi - 0.99f)));
-				// npx = gate * npx;
-				// npy = gate * npy;
-				// npz = gate * npz;
 			}else{
 				npx = nx;
 				npy = ny;
